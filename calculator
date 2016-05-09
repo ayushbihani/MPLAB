@@ -10,7 +10,7 @@ data segment
        
        op1 db ?
        op2 db ?
-       opr db ?
+       continue db "press any key to continue $"
        plus equ 0Ch ;scancodes so u  can easily compare
        minus equ 0Dh
        result db ?
@@ -31,7 +31,7 @@ repeat_comp:
         lea dx,linefeed
         mov ah,09
         int 21h
-        mov opr, 0
+       
         call inkey  ;for getting the first number
         call delay ;calling delay because why not .jk its because input from keypad is cocky (energising patterns )
         mov al,scode
@@ -53,7 +53,7 @@ repeat_comp:
         mov dl,'+'
         mov ah,02
         int 21h
-        mov opr,1
+        
         call inkey; second numebr input
         call delay
         mov al,scode
@@ -68,7 +68,7 @@ repeat_comp:
         mov dl,'-'
         mov ah,02
         int 21h
-        mov opr,1
+        
         call inkey; op2
         call delay
         mov al,scode
@@ -81,14 +81,24 @@ repeat_comp:
         jmp done
 
    done:
-         cmp opr,0
-         jz ending ;if no operation end
+         
+         
          mov dl,'='
          mov ah,02
          int 21h
          mov al,result
          call display
-         jmp repeat_comp;
+         lea dx,continue
+         mov ah,09
+         int 21h
+         
+         mov ah,06h ;for any onsole input
+         mov dl,255
+         int 21h
+         
+         
+         jz repeat_comp
+         jnz ending
   ending:             
         mov ah,4ch
         int 21h
