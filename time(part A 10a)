@@ -1,0 +1,35 @@
+
+
+assume cs:code ,ds:data
+
+code segment
+    start:
+       
+          mov ah,2ch
+          int 21h           
+          mov al,ch             
+          aam
+          call display
+          mov dl,':'
+          mov ah,02
+          int 21h
+           mov al,cl
+           aam
+           call display
+          mov ah,4ch
+          int 21h
+          
+          display proc
+          add ax,3030h
+          mov dl,ah
+          mov ah,02
+          push ax
+          int 21h
+          pop ax
+          mov dl,al
+          mov ah,2
+          int 21h
+          ret 
+          display endp
+code ends
+end start
