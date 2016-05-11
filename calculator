@@ -34,8 +34,7 @@ repeat_comp:
        
         call inkey  ;for getting the first number
         call delay ;calling delay because why not .jk its because input from keypad is cocky (energising patterns )
-        mov al,scode
-        dec al
+        mov scode,al
         mov op1,al ;putting first number in operand1
         call display
 
@@ -56,8 +55,7 @@ repeat_comp:
         
         call inkey; second numebr input
         call delay
-        mov al,scode
-        dec al
+        mov scode,al
         mov op2,al ;2nd number in op2
         call display; display 2nd number
         mov al, op1
@@ -71,8 +69,7 @@ repeat_comp:
         
         call inkey; op2
         call delay
-        mov al,scode
-        dec al
+        mov scode,al
         mov op2,al
         call display;
         mov al, op1
@@ -103,7 +100,7 @@ repeat_comp:
 
 
 inkey proc
-        push ax ;push all 4 variables on stack so that it doesnt interfere abovee
+         ;push all 3 variables on stack so that it doesnt interfere abovee
         push bx
         push cx
         push dx
@@ -143,7 +140,7 @@ next:   mov col,ah
         pop dx
         pop cx
         pop bx
-        pop ax
+        
         ret
 inkey endp
 
