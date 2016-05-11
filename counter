@@ -1,0 +1,66 @@
+assume cs:code,ds:data
+data segment
+    n dw 100
+    count dw 00           
+    num dw 00      
+    linefeed db 0ah,0dh,"$"
+data ends
+
+
+code segment
+    start:
+           mov ax,data
+           mov ds,ax 
+           mov bx,n   
+            mov ah,1
+           mov al,3
+           int 10h
+                  
+                  
+          number:        
+           mov ah,2
+                   mov dl,40d
+                   mov dh,12d
+                   int 10h 
+                   mov ax,num
+                   call disp
+                   inc num      
+                   lea dx,linefeed
+                   mov ah,09
+                   int 21h
+                   dec bx   
+                   cmp bx,0
+                   jnz number
+                  
+                  quit: mov ah,4ch
+                   int 21h
+                    
+           ;pls add delay procedure if u wish to 
+           
+           
+           
+           disp proc ;works upto 16 bit hexcadecimal ,decimals numbers .prints the number in decimal
+            mov dx,0
+            mov cx,10
+            mov count ,0
+            rep: div cx  ;takes reminder (normal division )to get each digit 
+                 push dx ;push them on stack
+                 mov dx,0
+                 inc count ;to keep a track of the no of digits
+                 cmp ax,0 ;when reminder is 0 that means all deigits are pushed onto the stack
+                 jne rep
+                 
+            disp1: pop dx  ; if number is 456 top of the stack will be 4 then 5 and then 6 .so print each of them adding 30h 
+                  add dl,30h
+                  mov ah,2
+                  int 21h
+                  
+                  dec count
+                  jnz disp1
+                  ret
+                  disp endp
+                 code ends
+end start
+           
+            
+    
