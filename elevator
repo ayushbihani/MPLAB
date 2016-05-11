@@ -1,0 +1,76 @@
+assume cs:code,ds:data
+data segment
+
+pa equ 20a0h
+pb equ 20a1h
+pc equ 20a2h
+cr equ 20a3h
+
+data ends
+
+code segment 
+
+start:
+      mov ax,data
+      mov ax,ds
+      mov al,82h
+      mov dx,cr
+      out dx,al
+      
+      mov dx,pa
+      mov al,00h
+      out dx,al
+      mov al,0f0h
+      out dx,al
+      
+      mov dx,pb
+scan :
+      in al,dx
+      and al,0fh
+      cmp al,0fh
+      je scan
+      mov cl,1
+      
+rot: ror al,1
+    jnc move
+    add cl,03h
+    jmp rot
+    
+move: mov dx,pa
+      mov al,0f0h
+      
+ led: out dx,al
+      call delay
+      inc al
+      dec cl
+      
+      jnz led
+      
+      and al,0fh
+      
+      call delay
+      dec al
+  
+  godown: out dx,al
+          call delay
+          dec al
+          cmp al,00h
+          jge godown
+          mov ah,4ch
+          int 21h
+          
+  delay proc
+      MOV bx,02fffh
+      j2:mov si,0ffffh
+      j1:dec si
+        jnz j1
+        dec bx
+        jnz j2
+        ret
+        
+      code ends 
+      
+      end start
+      
+      
+    
