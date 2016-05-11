@@ -5,6 +5,7 @@ pa equ 20A0h
 pb equ 20A1h
 pc equ 20A2h
 cr equ 20A3
+count db ?
 rowval db ?
 colval db ?
 scode db ?
