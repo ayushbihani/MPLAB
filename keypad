@@ -78,9 +78,7 @@ start :mov ax,data
           mov ah,4ch 
           int 21h
           
-          code ends
-          end start
-          
+        
           
           
           
@@ -109,3 +107,6 @@ start :mov ax,data
                   
                   ret
                   disp endp
+  code ends
+          end start
+          
