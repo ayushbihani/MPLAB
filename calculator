@@ -89,11 +89,6 @@ repeat_comp:
          mov ah,09
          int 21h
          
-         mov ah,06h ;for any onsole input
-         mov dl,255
-         int 21h
-         jz repeat_comp
-        
         mov ah,4ch
         int 21h
 
