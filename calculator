@@ -14,7 +14,7 @@ data segment
        plus equ 0Ch ;scancodes so u  can easily compare
        minus equ 0Dh
        result db ?
-       linefeed db "0ah,0dh,$"
+       linefeed db 0ah,0dh,"$"
         
 data ends
 
