@@ -10,7 +10,7 @@ data segment
        
        op1 db ?
        op2 db ?
-       continue db "press any key to stop $"
+       
        plus equ 0Ch ;scancodes so u  can easily compare
        minus equ 0Dh
        result db ?
@@ -85,9 +85,6 @@ repeat_comp:
          int 21h
          mov al,result
          call display
-         lea dx,continue
-         mov ah,09
-         int 21h
          
         mov ah,4ch
         int 21h
