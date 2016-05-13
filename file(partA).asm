@@ -2,7 +2,7 @@ assume cs:code,ds:data
 
 data segment
 	msg db "Error$"
-	file db "text.txt" ;your filename goes here (ex if your filename is abcd.txt then write "abcd.txt"
+	file db "text.txt" ;your filename goes here .Pls put the location of file here ex c:\masm1\text.txt .it is different for emu8086 also  
 	buff db 100 dup(?)
 data ends
 
