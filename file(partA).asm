@@ -10,12 +10,14 @@ code segment
 start:
 	mov ax,data
 	mov ds,ax
+	mov al,00
 	lea dx,file  ;file name
 	mov ah,3dh  ;to open file
 	int 21h
 	jc fail	;cf=1 if fail
 
 	;to read contents
+	mov bx,ax ;puts file handler in bx
 	mov ah,3fh
 	mov cx,100d 	;no of char
 	lea dx,buff	;destination
@@ -32,6 +34,7 @@ next:
 	mov dl,[di]
 	mov ah,02
 	int 21h
+	inc di
 	loop next
 	jmp last
 
