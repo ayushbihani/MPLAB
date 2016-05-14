@@ -42,7 +42,7 @@ next1:
 		ldr r5,[r4]
 		ldr r4,=op3
 		ldr r4,[r4] 
-		sub r5,r4,r5 		
+		sub r5,r5,r4 		
 			
 	display: 
 			mov r2,r5 ;value in r5 to be moved into r2 for displaying
