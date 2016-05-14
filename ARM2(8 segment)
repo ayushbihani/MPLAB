@@ -21,7 +21,7 @@ display:
 		
 		cmp r2,#0 
 		bne display
-		
+		swi 0x11
   					
 				
 				
