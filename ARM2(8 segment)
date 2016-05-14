@@ -1,0 +1,31 @@
+.text
+.global _start
+
+_start:
+		mov r2,#10 ;count 
+		ldr r1,=code
+display:
+		
+		ldr r0,[r1] ;r0 contains code
+		swi 0x200 ;interrupt todiplay in 8segment lcd display
+		add r1,r1,#4 ;inc pointer
+		sub r2,r2,#1
+		
+		ldr r4,=delaydata
+		ldr r3,[r4]
+	del:	
+		
+		sub r3,r3,#1
+		cmp r3,#0
+		bne del
+		
+		cmp r2,#0 
+		bne display
+		
+  					
+				
+				
+.data
+code:.word 0xed,0x60,0xce,0xea,0x63,0xab,0x2f,0xe0,0xff ,0xe3
+delaydata: .word 0x2ffff
+.end 				
