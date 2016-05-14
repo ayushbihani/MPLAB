@@ -1,0 +1,45 @@
+.text
+.global _start
+
+_start:
+
+
+
+		ldr r0,=key
+		ldr r1,[r0]
+		mov r4,#5
+		ldr r2,=arr
+		
+again:
+		ldr r3,[r2]
+		cmp r1,r3 ;comparing first element with key
+		beq success ;branch on equal to ,similar to jmp with condition specified above
+		add r2,r2,#4 ;next element in array
+		sub r4,r4,#1 ;and and sub dont affect flags
+		
+		cmp r4,#0 
+		bne again ;branch not equal to .basically jump to again 
+		
+		ldr r0,=msg2 ;failure msg
+		bal display ;branch always 
+		
+success:
+			ldr r0,=msg ;String has to be in r0 register
+
+display:
+		swi 0x02 ; displaing string
+		swi 0x11 ;terminate program
+.data
+	arr: .word 10,11,0,45,56
+	key: .word 0
+	msg: .asciiz "key found"
+	msg2: .asciiz "key not found"
+	
+.end		
+		
+		
+		
+			
+	
+	
+	
