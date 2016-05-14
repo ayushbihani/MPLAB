@@ -1,0 +1,63 @@
+.text
+.global _start
+
+_start:	
+		ldr r2,=op1
+		mov r4,#3 ;no of operands
+		
+press:
+		swi 0x203
+		cmp r0,#0 ;check if key was pressed
+		beq press	
+		
+		mov r1,#0 ;count
+
+rotate:
+		mov r0,r0,LSR #1 ;shift to get value of blue key pressed
+		cmp r0,#0
+		beq next1
+		add r1,r1,#1 ;inc count
+		bal rotate
+		
+next1:
+		str r1,[r2] ;store r1 in address specified by r2 that is store r1 in op1
+		add r2,r2,#4 ;get next address of variable
+		sub r4,r4,#1 ;decrement count of operands
+		cmp r4,#0
+		bne press
+	
+		ldr r3,=op2 ;will have operation type 
+		ldr r6,[r3]
+		cmp r6,#0x0a ;cheeck if value is hex A ,which means add
+		bne subtract
+		ldr r4,=op1
+		ldr r5,[r4]
+		ldr r4,=op3
+		ldr r4,[r4] 
+		add r5,r4,r5 
+		bal display
+		
+	subtract:
+		ldr r4,=op1
+		ldr r5,[r4]
+		ldr r4,=op3
+		ldr r4,[r4] 
+		sub r5,r4,r5 		
+			
+	display: 
+			mov r2,r5 ;value in r5 to be moved into r2 for displaying
+            mov r0,#1 ;sets x coordinate on lcd screen .where to start displaying
+			mov r1,#1 
+			swi 0x205 ;displays integer on the lcd screen 	
+			
+			swi 0x11 ;exit
+			
+		
+
+.data
+
+op1: .word 0	
+op2: .word 0
+op3: .word 0
+.end	
+		
