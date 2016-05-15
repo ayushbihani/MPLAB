@@ -65,15 +65,15 @@ start :mov ax,data
           mov ah,00
           lea dx,rowmsg ;printing row value
           display ;macro 
-          mov ax,row
+          mov al,row
           call disp
           lea dx,colmsg
           display 
-          mov ax,col
+          mov al,col
           call disp
           lea dx,key
           display
-          mov ax,scode
+          mov al,scode
           call disp
           
           mov ah,4ch 
@@ -88,23 +88,19 @@ start :mov ax,data
           
   disp proc ;works upto 16 bit hexcadecimal ,decimals numbers .prints the number in decimal .number should be in AX
             
-            mov dx,0
-            mov cx,10
-            mov count ,0
-            rep: div cx  ;takes reminder (normal division )to get each digit 
-                  push dx ;push them on stack.dx will have the reminder
-                 mov dx,0
-                 inc count ;to keep a track of the no of digits
-                 cmp ax,0 ;when reminder is 0 that means all deigits are pushed onto the stack
-                 jne rep
-                 
-      disp1: pop dx  ; if number is 456 top of the stack will be 4 then 5 and then 6 .so print each of them adding 30h 
-                  add dl,30h
-                  mov ah,2
-                  int 21h
-                  
-                  dec count
-                  jnz disp1
+            aam
+            mov dl,ah
+            add dl,30h
+            mov ah,02
+            int 21h
+            
+            mov dl,al
+            add dl,30h
+            mov ah,02
+            int 21h
+            
+            
+            
                   
                   ret
                   disp endp
