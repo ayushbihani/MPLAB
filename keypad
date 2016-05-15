@@ -86,24 +86,25 @@ start :mov ax,data
           
           
           
-  disp proc ;works upto 16 bit hexcadecimal ,decimals numbers .prints the number in decimal .number should be in AX
-            
-            aam
-            mov dl,ah
-            add dl,30h
-            mov ah,02
-            int 21h
-            
-            mov dl,al
-            add dl,30h
-            mov ah,02
-            int 21h
-            
-            
-            
-                  
-                  ret
-                  disp endp
+   disp proc
+        aam
+        add ax,3030h
+        mov dl,ah
+        mov ah,2
+        push ax
+        int 21h
+        pop ax
+        mov dl,al
+        mov ah,2
+        int 21h
+        mov dl,0dh
+        mov ah,2
+        int 21h    
+        mov dl,0ah
+        mov ah,02
+        int 21h   
+        ret
+        disp endp
   code ends
           end start
           
